@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC  -Wl,-rpath-link,  -Wl,--gc-sections -shared  -o LLVMPJT.so CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.o  -Wl,-rpath,"\$ORIGIN/../lib" 
