@@ -56,7 +56,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /n/eecs583a/home/zjiaming/dswp-plus
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /n/eecs583a/home/zjiaming/dswp-plus/build
+CMAKE_BINARY_DIR = /n/eecs583a/home/zjiaming/dswp-plus/mypass
 
 # Include any dependencies generated for this target.
 include mypass/CMakeFiles/LLVMPJT.dir/depend.make
@@ -70,32 +70,32 @@ include mypass/CMakeFiles/LLVMPJT.dir/progress.make
 include mypass/CMakeFiles/LLVMPJT.dir/flags.make
 
 mypass/CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.o: mypass/CMakeFiles/LLVMPJT.dir/flags.make
-mypass/CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.o: ../mypass/DSWP_0.cpp
+mypass/CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.o: DSWP_0.cpp
 mypass/CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.o: mypass/CMakeFiles/LLVMPJT.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/n/eecs583a/home/zjiaming/dswp-plus/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object mypass/CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.o"
-	cd /n/eecs583a/home/zjiaming/dswp-plus/build/mypass && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT mypass/CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.o -MF CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.o.d -o CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.o -c /n/eecs583a/home/zjiaming/dswp-plus/mypass/DSWP_0.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/n/eecs583a/home/zjiaming/dswp-plus/mypass/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object mypass/CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.o"
+	cd /n/eecs583a/home/zjiaming/dswp-plus/mypass/mypass && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT mypass/CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.o -MF CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.o.d -o CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.o -c /n/eecs583a/home/zjiaming/dswp-plus/mypass/DSWP_0.cpp
 
 mypass/CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.i"
-	cd /n/eecs583a/home/zjiaming/dswp-plus/build/mypass && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /n/eecs583a/home/zjiaming/dswp-plus/mypass/DSWP_0.cpp > CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.i
+	cd /n/eecs583a/home/zjiaming/dswp-plus/mypass/mypass && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /n/eecs583a/home/zjiaming/dswp-plus/mypass/DSWP_0.cpp > CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.i
 
 mypass/CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.s"
-	cd /n/eecs583a/home/zjiaming/dswp-plus/build/mypass && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /n/eecs583a/home/zjiaming/dswp-plus/mypass/DSWP_0.cpp -o CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.s
+	cd /n/eecs583a/home/zjiaming/dswp-plus/mypass/mypass && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /n/eecs583a/home/zjiaming/dswp-plus/mypass/DSWP_0.cpp -o CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.s
 
 mypass/CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.o: mypass/CMakeFiles/LLVMPJT.dir/flags.make
-mypass/CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.o: ../mypass/DSWP_1.cpp
+mypass/CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.o: DSWP_1.cpp
 mypass/CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.o: mypass/CMakeFiles/LLVMPJT.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/n/eecs583a/home/zjiaming/dswp-plus/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object mypass/CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.o"
-	cd /n/eecs583a/home/zjiaming/dswp-plus/build/mypass && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT mypass/CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.o -MF CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.o.d -o CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.o -c /n/eecs583a/home/zjiaming/dswp-plus/mypass/DSWP_1.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/n/eecs583a/home/zjiaming/dswp-plus/mypass/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object mypass/CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.o"
+	cd /n/eecs583a/home/zjiaming/dswp-plus/mypass/mypass && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT mypass/CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.o -MF CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.o.d -o CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.o -c /n/eecs583a/home/zjiaming/dswp-plus/mypass/DSWP_1.cpp
 
 mypass/CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.i"
-	cd /n/eecs583a/home/zjiaming/dswp-plus/build/mypass && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /n/eecs583a/home/zjiaming/dswp-plus/mypass/DSWP_1.cpp > CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.i
+	cd /n/eecs583a/home/zjiaming/dswp-plus/mypass/mypass && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /n/eecs583a/home/zjiaming/dswp-plus/mypass/DSWP_1.cpp > CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.i
 
 mypass/CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.s"
-	cd /n/eecs583a/home/zjiaming/dswp-plus/build/mypass && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /n/eecs583a/home/zjiaming/dswp-plus/mypass/DSWP_1.cpp -o CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.s
+	cd /n/eecs583a/home/zjiaming/dswp-plus/mypass/mypass && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /n/eecs583a/home/zjiaming/dswp-plus/mypass/DSWP_1.cpp -o CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.s
 
 # Object files for target LLVMPJT
 LLVMPJT_OBJECTS = \
@@ -109,18 +109,18 @@ mypass/LLVMPJT.so: mypass/CMakeFiles/LLVMPJT.dir/DSWP_0.cpp.o
 mypass/LLVMPJT.so: mypass/CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.o
 mypass/LLVMPJT.so: mypass/CMakeFiles/LLVMPJT.dir/build.make
 mypass/LLVMPJT.so: mypass/CMakeFiles/LLVMPJT.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/n/eecs583a/home/zjiaming/dswp-plus/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared module LLVMPJT.so"
-	cd /n/eecs583a/home/zjiaming/dswp-plus/build/mypass && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/LLVMPJT.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/n/eecs583a/home/zjiaming/dswp-plus/mypass/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared module LLVMPJT.so"
+	cd /n/eecs583a/home/zjiaming/dswp-plus/mypass/mypass && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/LLVMPJT.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 mypass/CMakeFiles/LLVMPJT.dir/build: mypass/LLVMPJT.so
 .PHONY : mypass/CMakeFiles/LLVMPJT.dir/build
 
 mypass/CMakeFiles/LLVMPJT.dir/clean:
-	cd /n/eecs583a/home/zjiaming/dswp-plus/build/mypass && $(CMAKE_COMMAND) -P CMakeFiles/LLVMPJT.dir/cmake_clean.cmake
+	cd /n/eecs583a/home/zjiaming/dswp-plus/mypass/mypass && $(CMAKE_COMMAND) -P CMakeFiles/LLVMPJT.dir/cmake_clean.cmake
 .PHONY : mypass/CMakeFiles/LLVMPJT.dir/clean
 
 mypass/CMakeFiles/LLVMPJT.dir/depend:
-	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /n/eecs583a/home/zjiaming/dswp-plus /n/eecs583a/home/zjiaming/dswp-plus/mypass /n/eecs583a/home/zjiaming/dswp-plus/build /n/eecs583a/home/zjiaming/dswp-plus/build/mypass /n/eecs583a/home/zjiaming/dswp-plus/build/mypass/CMakeFiles/LLVMPJT.dir/DependInfo.cmake --color=$(COLOR)
+	cd /n/eecs583a/home/zjiaming/dswp-plus/mypass && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /n/eecs583a/home/zjiaming/dswp-plus /n/eecs583a/home/zjiaming/dswp-plus/mypass /n/eecs583a/home/zjiaming/dswp-plus/mypass /n/eecs583a/home/zjiaming/dswp-plus/mypass/mypass /n/eecs583a/home/zjiaming/dswp-plus/mypass/mypass/CMakeFiles/LLVMPJT.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : mypass/CMakeFiles/LLVMPJT.dir/depend
 
