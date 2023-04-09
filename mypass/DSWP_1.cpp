@@ -1,6 +1,7 @@
 //1st step: create dependence graph
 
 #include "DSWP.h"
+#include "llvm/Support/raw_os_ostream.h"
 
 using namespace llvm;
 using namespace std;
@@ -16,16 +17,18 @@ void DSWP::dfsVisit(BasicBlock *BB, std::set<BasicBlock *> &vis,
 }
 
 void DSWP::buildPDG(Loop *L) {
-	cout<<">>Building PDG for new loop"<<endl;
-	cout<<">>Enumerating blocks"<<endl;
+	errs()<<"Building PDG for new loop\n";
+	errs()<<">>Building PDG for new loop\n";
+	errs()<<">>Enumerating blocks\n";
+	// llvm::raw_ostream &output = llvm::outs();
 	raw_os_ostream outstream(cout);
 
     //Initialize PDG
 	for (Loop::block_iterator bi = L->getBlocks().begin(); bi != L->getBlocks().end(); bi++) {
 		BasicBlock *BB = *bi;
-		cout<<">>BASIC BLOCK ("<<BB->getName().str()<<")"<<endl;
+		errs()<<">>BASIC BLOCK ("<<BB->getName().str()<<")\n";
 		BB->print(outstream);
-		cout<<endl<<endl;
+		errs()<<"\n";
 		for (BasicBlock::iterator ui = BB->begin(); ui != BB->end(); ui++) {
 			Instruction *inst = &(*ui);
 
@@ -43,7 +46,7 @@ void DSWP::buildPDG(Loop *L) {
 		}
 	}
 
-	cout<<">>End basic blocks"<<endl;
+	errs()<<">>End basic blocks\n";
 
 	//LoopInfo &li = getAnalysis<LoopInfo>();
 
@@ -65,11 +68,11 @@ void DSWP::buildPDG(Loop *L) {
 			for (Value::use_iterator ui = ii->use_begin(); ui != ii->use_end(); ui++) {
 				if (Instruction *user = dyn_cast<Instruction>(*ui)) {
 					if (L->contains(user)) {
-						cout<<">>REG dependency: [[";
+						errs()<<">>REG dependency: [[";
 						inst->print(outstream);
-						cout<<"]] -> [[";
+						errs()<<"]] -> [[";
 						user->print(outstream);
-						cout<<"]]"<<endl;
+						errs()<<"]]\n";
 						addEdge(inst, user, REG);
 					}
 				}
@@ -84,15 +87,13 @@ void DSWP::buildPDG(Loop *L) {
 			MemDepResult mdr = mda.getDependency(inst);
 			//TODO not sure clobbers mean!!
 
-			cout << endl << "\t";
+			errs() << "\n\t";
 			inst->print(outstream);
-			cout << endl
-				 << "\t" << "isClobber: " << mdr.isClobber()
+			errs() << "\t" << "isClobber: " << mdr.isClobber()
 			     << "\t" << "isDef: " << mdr.isDef()
 			     << "\t" << "isNonFuncLocal: " << mdr.isNonFuncLocal()
 			     << "\t" << "isNonLocal: " << mdr.isNonLocal()
-			     << "\t" << "isUnknown: " << mdr.isUnknown()
-			     << endl << endl;
+			     << "\t" << "isUnknown: " << mdr.isUnknown() << "\n";
 
 			if (mdr.isDef()) {
 				Instruction *dep = mdr.getInst();
@@ -100,49 +101,49 @@ void DSWP::buildPDG(Loop *L) {
 				if (isa<LoadInst>(inst)) {
 					//READ AFTER WRITE
 					if (isa<StoreInst>(dep)) {
-						cout<<">>MEM read after write (true) dependency: [[";
+						errs()<<">>MEM read after write (true) dependency: [[";
 						dep->print(outstream);
-						cout<<"]] -> [[";
+						errs()<<"]] -> [[";
 						inst->print(outstream);
-						cout<<"]]"<<endl;
+						errs()<<"]]\n";
 						addEdge(dep, inst, DTRUE);
 					}
 					//READ AFTER ALLOCATE
 					if (isa<AllocaInst>(dep)) {
-						cout<<">>MEM read after allocate (true) dependency: [[";
+						errs()<<">>MEM read after allocate (true) dependency: [[";
 						dep->print(outstream);
-						cout<<"]] -> [[";
+						errs()<<"]] -> [[";
 						inst->print(outstream);
-						cout<<"]]"<<endl;
+						errs()<<"]]\n";
 						addEdge(dep, inst, DTRUE);
 					}
 				}
 				if (isa<StoreInst>(inst)) {
 					//WRITE AFTER READ
 					if (isa<LoadInst>(dep)) {
-						cout<<">>MEM write after read (anti) dependency: [[";
+						errs()<<">>MEM write after read (anti) dependency: [[";
 						dep->print(outstream);
-						cout<<"]] -> [[";
+						errs()<<"]] -> [[";
 						inst->print(outstream);
-						cout<<"]]"<<endl;
+						errs()<<"]]\n";
 						addEdge(dep, inst, DANTI);
 					}
 					//WRITE AFTER WRITE
 					if (isa<StoreInst>(dep)) {
-						cout<<">>MEM write after write (out) dependency: [[";
+						errs()<<">>MEM write after write (out) dependency: [[";
 						dep->print(outstream);
-						cout<<"]] -> [[";
+						errs()<<"]] -> [[";
 						inst->print(outstream);
-						cout<<"]]"<<endl;
+						errs()<<"]]\n";
 						addEdge(dep, inst, DOUT);
 					}
 					//WRITE AFTER ALLOCATE
 					if (isa<AllocaInst>(dep)) {
-						cout<<">>MEM write after allocate (out) dependency: [[";
+						errs()<<">>MEM write after allocate (out) dependency: [[";
 						dep->print(outstream);
-						cout<<"]] -> [[";
+						errs()<<"]] -> [[";
 						inst->print(outstream);
-						cout<<"]]"<<endl;
+						errs()<<"]]\n";
 						addEdge(dep, inst, DOUT);
 					}
 				}
@@ -170,11 +171,11 @@ void DSWP::buildPDG(Loop *L) {
 
 						addEdge(dep, inst, DANTI); // TODO: dep type
 
-						cout << ">>NONLOCAL CALL dependency: [[";
+						errs() << ">>NONLOCAL CALL dependency: [[";
 						dep->print(outstream);
-						cout << "]] -> [[";
+						errs() << "]] -> [[";
 						inst->print(outstream);
-						cout << "]]" << endl;
+						errs() << "]]\n";
 					}
 				} else {
 					//
@@ -216,18 +217,18 @@ void DSWP::buildPDG(Loop *L) {
 						addEdge(dep, inst, DANTI);
 						// TODO: actually figure out the dependence type
 
-						cout << ">>NONLOCAL dependency: [[";
+						errs() << ">>NONLOCAL dependency: [[";
 						dep->print(outstream);
-						cout << "]] -> [[";
+						errs() << "]] -> [[";
 						inst->print(outstream);
-						cout << "]]" << endl;
+						errs() << "]]";
 					}
 				}
 			}
 		}
 	}
 
-	cout<<">>Finished finding data dependences"<<endl;
+	errs()<<">>Finished finding data dependences\n";
 
 
 	/*
@@ -236,7 +237,7 @@ void DSWP::buildPDG(Loop *L) {
 	 *
 	 */
 
-	cout<<">>Finding control dependences"<<endl;
+	errs()<<">>Finding control dependences\n";
 
 	BasicBlock *curheader = L->getHeader();
 	Function *curfunc = curheader->getParent();
@@ -247,14 +248,14 @@ void DSWP::buildPDG(Loop *L) {
 	static LLVMContext MyGlobalContext;
 	Module newmodule("dummymodule", MyGlobalContext);
 	IntegerType *int_arg = IntegerType::get(MyGlobalContext, 32);
-	cout<<">>Trying to create function inside module..."<<endl;
+	errs()<<">>Trying to create function inside module...\n";
 	FunctionCallee func = newmodule.getOrInsertFunction("dummyloopunroll",
-													Type::getVoidTy(
-													MyGlobalContext),
-													int_arg,
-												   	NULL);
+													Type::getVoidTy(MyGlobalContext),
+													Type::getInt32Ty(MyGlobalContext));
+	// int_arg,
+	// NULL
 	Constant *cfunc = dyn_cast<Constant>(func.getCallee());
-	cout<<">>Function created!"<<endl;
+	errs()<<">>Function created!\n";
 	Function *ctrlfunc = cast<Function>(cfunc);
 
 	/*
@@ -277,13 +278,12 @@ void DSWP::buildPDG(Loop *L) {
 			dfsVisit(BB, b_visited, bb_ordered, L);
 	}
 
-	cout<<">>Reverse topological sort:"<<endl;
+	errs()<<">>Reverse topological sort:\n";
 	assert(!bb_ordered.empty());
 	for (std::vector<BasicBlock *>::iterator it = bb_ordered.begin(); it !=
 		bb_ordered.end(); ++it) {
-	   cout<<(*it)->getName().str()<<", ";
+	   errs()<<(*it)->getName().str()<<", ";
 	}
-	cout<<endl;
 
 	std::map<BasicBlock *, std::pair<BasicBlock *, BasicBlock *> > realtodummy;
 	std::map<BasicBlock *, BasicBlock *> dummytoreal;
@@ -301,7 +301,7 @@ void DSWP::buildPDG(Loop *L) {
 			const std::string str2 = "bottomhalf_" + (*it)->getName().str();
 			const Twine n1(str1);
 			const Twine n2(str2);
-			cout<<"n1 = "<<n1.str()<<", n2 = "<<n2.str()<<endl;
+			errs()<<"n1 = "<<n1.str()<<", n2 = "<<n2.str();
 			BasicBlock *newbb = BasicBlock::Create(ctxt,
 												   n1, ctrlfunc, 0);
 			//Dummy block for second iteration
@@ -325,12 +325,11 @@ void DSWP::buildPDG(Loop *L) {
 													"exitblock", ctrlfunc, 0);
 	ReturnInst::Create(ctxt, 0, dummyexitblock);
 
-	cout<<">>Printing out names of dummy blocks inside our fake function"<<endl;
+	errs()<<">>Printing out names of dummy blocks inside our fake function\n";
 	for (Function::iterator FI = ctrlfunc->begin(), FE = ctrlfunc->end();
 		 FI != FE; ++FI) {
-		cout<<(*FI).getName().str()<<", ";
+		errs()<<(*FI).getName().str()<<", ";
 	}
-	cout<<endl;
 
 	//Find blocks from which the loop may be exited
 	// TODO: we've assumed there's only one....
@@ -346,7 +345,7 @@ void DSWP::buildPDG(Loop *L) {
 			if (L->contains(*pi)) //block in loop?
 				if (returnblocks.find(*pi) == returnblocks.end()) //to insert?
 				{
-					cout<<">>Adding "<<(*pi)->getName().str()<<" as exiting block"<<endl;
+					errs()<<">>Adding "<<(*pi)->getName().str()<<" as exiting block\n";
 					returnblocks.insert(*pi); //Insert block as a return block
 				}
 		}
@@ -432,15 +431,15 @@ void DSWP::buildPDG(Loop *L) {
 		} while (it != bb_ordered.begin());
 	}
 
-	cout<<">>Printing out blocks"<<endl;
+	errs()<<">>Printing out blocks\n";
 	for (Function::iterator FI = ctrlfunc->begin(), FE = ctrlfunc->end();
 		 FI != FE; ++FI) {
-		cout<<"Contents of block "<<(*FI).getName().str()<<":"<<endl;
+		errs()<<"Contents of block "<<(*FI).getName().str()<<":\n";
 		(*FI).print(outstream);
-		cout<<endl;
+		errs() << "\n";
 	}
 
-	cout<<endl<<">>Printing out FUNCTION ctrlfunc:"<<endl;
+	errs()<<">>Printing out FUNCTION ctrlfunc:\n";
 	ctrlfunc->print(outstream);
 	/*
 	 *
@@ -448,11 +447,13 @@ void DSWP::buildPDG(Loop *L) {
 	 *
 	 */
 
-	cout<<">>Attempting to grab postdominator tree..."<<endl;
-	PostDominatorTree &pdt= getAnalysis<PostDominatorTreeWrapperPass>().getPostDomTree();
-	// PostDominatorTreeWrapperPass pdt;
-	pdt.runOnFunction(ctrlfuncref);
-	cout<<">>Successfully grabbed postdominator tree from the analysis"<<endl;
+	errs()<<">>Attempting to grab postdominator tree...\n";
+	PostDominatorTreeWrapperPass pdtw;
+	pdtw.runOnFunction(ctrlfuncref);
+
+	PostDominatorTree &pdt = pdtw.getPostDomTree();
+	// pdt.runOnFunction(ctrlfuncref);
+	errs()<<">>Successfully grabbed postdominator tree from the analysis\n";
 
 	for (std::vector<BasicBlock *>::iterator it = dummylist.begin();
 		 it != dummylist.end(); ++it)
@@ -478,15 +479,15 @@ void DSWP::buildPDG(Loop *L) {
 			while (succnode != dn && depblock != dummyexitblock)
 			{
 				BasicBlock *realdepblock = dummytoreal[depblock];
-				TerminatorInst *ti = realblock->getTerminator();
+				Instruction *ti = realblock->getTerminator();
 				for (BasicBlock::iterator bi = realdepblock->begin(),
 						 be = realdepblock->end(); bi != be; ++bi) {
 					Instruction *inst = &(*bi);
-					cout<<"Adding control edge from [[";
-					ti->print(outstream);
-					cout<<"]](in "<<realblock->getName().str()<<") to [[";
-					inst->print(outstream);
-					cout<<"]](in "<<realdepblock->getName().str()<<")"<<endl;
+					errs()<<"Adding control edge from [[" << ti;
+					// ti->print(outstream);
+					errs()<<"]](in "<<realblock->getName().str()<<") to [[" << inst;
+					// inst->print(outstream);
+					errs()<<"]](in "<<realdepblock->getName().str()<<")\n";
 					addEdge(ti, inst, CONTROL);
 				}
 

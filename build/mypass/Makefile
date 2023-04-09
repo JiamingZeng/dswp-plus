@@ -251,6 +251,174 @@ DSWP_1.cpp.s:
 	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/DSWP_1.cpp.s
 .PHONY : DSWP_1.cpp.s
 
+DSWP_2.o: DSWP_2.cpp.o
+.PHONY : DSWP_2.o
+
+# target to build an object file
+DSWP_2.cpp.o:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/DSWP_2.cpp.o
+.PHONY : DSWP_2.cpp.o
+
+DSWP_2.i: DSWP_2.cpp.i
+.PHONY : DSWP_2.i
+
+# target to preprocess a source file
+DSWP_2.cpp.i:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/DSWP_2.cpp.i
+.PHONY : DSWP_2.cpp.i
+
+DSWP_2.s: DSWP_2.cpp.s
+.PHONY : DSWP_2.s
+
+# target to generate assembly for a file
+DSWP_2.cpp.s:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/DSWP_2.cpp.s
+.PHONY : DSWP_2.cpp.s
+
+DSWP_3.o: DSWP_3.cpp.o
+.PHONY : DSWP_3.o
+
+# target to build an object file
+DSWP_3.cpp.o:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/DSWP_3.cpp.o
+.PHONY : DSWP_3.cpp.o
+
+DSWP_3.i: DSWP_3.cpp.i
+.PHONY : DSWP_3.i
+
+# target to preprocess a source file
+DSWP_3.cpp.i:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/DSWP_3.cpp.i
+.PHONY : DSWP_3.cpp.i
+
+DSWP_3.s: DSWP_3.cpp.s
+.PHONY : DSWP_3.s
+
+# target to generate assembly for a file
+DSWP_3.cpp.s:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/DSWP_3.cpp.s
+.PHONY : DSWP_3.cpp.s
+
+DSWP_4.o: DSWP_4.cpp.o
+.PHONY : DSWP_4.o
+
+# target to build an object file
+DSWP_4.cpp.o:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/DSWP_4.cpp.o
+.PHONY : DSWP_4.cpp.o
+
+DSWP_4.i: DSWP_4.cpp.i
+.PHONY : DSWP_4.i
+
+# target to preprocess a source file
+DSWP_4.cpp.i:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/DSWP_4.cpp.i
+.PHONY : DSWP_4.cpp.i
+
+DSWP_4.s: DSWP_4.cpp.s
+.PHONY : DSWP_4.s
+
+# target to generate assembly for a file
+DSWP_4.cpp.s:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/DSWP_4.cpp.s
+.PHONY : DSWP_4.cpp.s
+
+DSWP_5.o: DSWP_5.cpp.o
+.PHONY : DSWP_5.o
+
+# target to build an object file
+DSWP_5.cpp.o:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/DSWP_5.cpp.o
+.PHONY : DSWP_5.cpp.o
+
+DSWP_5.i: DSWP_5.cpp.i
+.PHONY : DSWP_5.i
+
+# target to preprocess a source file
+DSWP_5.cpp.i:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/DSWP_5.cpp.i
+.PHONY : DSWP_5.cpp.i
+
+DSWP_5.s: DSWP_5.cpp.s
+.PHONY : DSWP_5.s
+
+# target to generate assembly for a file
+DSWP_5.cpp.s:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/DSWP_5.cpp.s
+.PHONY : DSWP_5.cpp.s
+
+DSWP_DEBUG.o: DSWP_DEBUG.cpp.o
+.PHONY : DSWP_DEBUG.o
+
+# target to build an object file
+DSWP_DEBUG.cpp.o:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/DSWP_DEBUG.cpp.o
+.PHONY : DSWP_DEBUG.cpp.o
+
+DSWP_DEBUG.i: DSWP_DEBUG.cpp.i
+.PHONY : DSWP_DEBUG.i
+
+# target to preprocess a source file
+DSWP_DEBUG.cpp.i:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/DSWP_DEBUG.cpp.i
+.PHONY : DSWP_DEBUG.cpp.i
+
+DSWP_DEBUG.s: DSWP_DEBUG.cpp.s
+.PHONY : DSWP_DEBUG.s
+
+# target to generate assembly for a file
+DSWP_DEBUG.cpp.s:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/DSWP_DEBUG.cpp.s
+.PHONY : DSWP_DEBUG.cpp.s
+
+Utils.o: Utils.cpp.o
+.PHONY : Utils.o
+
+# target to build an object file
+Utils.cpp.o:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/Utils.cpp.o
+.PHONY : Utils.cpp.o
+
+Utils.i: Utils.cpp.i
+.PHONY : Utils.i
+
+# target to preprocess a source file
+Utils.cpp.i:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/Utils.cpp.i
+.PHONY : Utils.cpp.i
+
+Utils.s: Utils.cpp.s
+.PHONY : Utils.s
+
+# target to generate assembly for a file
+Utils.cpp.s:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/Utils.cpp.s
+.PHONY : Utils.cpp.s
+
+raw_os_ostream.o: raw_os_ostream.cpp.o
+.PHONY : raw_os_ostream.o
+
+# target to build an object file
+raw_os_ostream.cpp.o:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/raw_os_ostream.cpp.o
+.PHONY : raw_os_ostream.cpp.o
+
+raw_os_ostream.i: raw_os_ostream.cpp.i
+.PHONY : raw_os_ostream.i
+
+# target to preprocess a source file
+raw_os_ostream.cpp.i:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/raw_os_ostream.cpp.i
+.PHONY : raw_os_ostream.cpp.i
+
+raw_os_ostream.s: raw_os_ostream.cpp.s
+.PHONY : raw_os_ostream.s
+
+# target to generate assembly for a file
+raw_os_ostream.cpp.s:
+	cd /n/eecs583a/home/zjiaming/dswp-plus/build && $(MAKE) $(MAKESILENT) -f mypass/CMakeFiles/LLVMPJT.dir/build.make mypass/CMakeFiles/LLVMPJT.dir/raw_os_ostream.cpp.s
+.PHONY : raw_os_ostream.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -272,6 +440,27 @@ help:
 	@echo "... DSWP_1.o"
 	@echo "... DSWP_1.i"
 	@echo "... DSWP_1.s"
+	@echo "... DSWP_2.o"
+	@echo "... DSWP_2.i"
+	@echo "... DSWP_2.s"
+	@echo "... DSWP_3.o"
+	@echo "... DSWP_3.i"
+	@echo "... DSWP_3.s"
+	@echo "... DSWP_4.o"
+	@echo "... DSWP_4.i"
+	@echo "... DSWP_4.s"
+	@echo "... DSWP_5.o"
+	@echo "... DSWP_5.i"
+	@echo "... DSWP_5.s"
+	@echo "... DSWP_DEBUG.o"
+	@echo "... DSWP_DEBUG.i"
+	@echo "... DSWP_DEBUG.s"
+	@echo "... Utils.o"
+	@echo "... Utils.i"
+	@echo "... Utils.s"
+	@echo "... raw_os_ostream.o"
+	@echo "... raw_os_ostream.i"
+	@echo "... raw_os_ostream.s"
 .PHONY : help
 
 

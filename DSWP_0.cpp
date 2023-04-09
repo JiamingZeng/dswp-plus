@@ -20,7 +20,8 @@ Edge::Edge(Instruction *u, Instruction *v, DType dtype) {
 }
 
 char DSWP::ID = 0;
-RegisterPass<DSWP> X("dswp", "15745 Decoupled Software Pipeline");
+// static RegisterPass<Correctness::FPLICMPass>
+satic RegisterPass<DSWP::DSWP> X("dswp", "15745 Decoupled Software Pipeline", false, false);
 
 DSWP::DSWP() : LoopPass (ID){
 	loopCounter = 0;

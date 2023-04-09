@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC  -Wl,-rpath-link,  -Wl,--gc-sections -shared  -o LLVMHW2.so CMakeFiles/LLVMHW2.dir/DSWP_0.cpp.o  -Wl,-rpath,"\$ORIGIN/../lib" 

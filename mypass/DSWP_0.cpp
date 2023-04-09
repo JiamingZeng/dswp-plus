@@ -19,14 +19,15 @@ Edge::Edge(Instruction *u, Instruction *v, DType dtype) {
 	this->dtype = dtype;
 }
 
-char DSWP::ID = 0;
-RegisterPass<DSWP> X("dswp", "15745 Decoupled Software Pipeline");
+// char DSWP::ID = 0;
+// static RegisterPass<DSWP> X("dswp", "15745 Decoupled Software Pipeline");
 
 DSWP::DSWP() : LoopPass (ID){
 	loopCounter = 0;
 }
 
 bool DSWP::doInitialization(Loop *L, LPPassManager &LPM) {
+	errs() << "doInitialization";
 	Module *mod = L->getHeader()->getParent()->getParent();
 
 	Function *produce = mod->getFunction("sync_produce");
@@ -96,9 +97,12 @@ bool DSWP::doInitialization(Loop *L, LPPassManager &LPM) {
 		FunctionType *show3_ft = FunctionType::get(void_ty, show3_arg, false);
 		Function *show3 = Function::Create(show3_ft, Function::ExternalLinkage, "showPtr", mod);
 		show3->setCallingConv(CallingConv::C);
+		errs() << "FinishInitialization";
 
 		return true;
 	}
+	errs() << "FinishInitialization";
+
 	return false;
 }
 
@@ -112,6 +116,7 @@ void DSWP::getAnalysisUsage(AnalysisUsage &AU) const {
 }
 
 bool DSWP::initialize(Loop *L) {
+	errs() << "initialize123\n";
 	// loop-level initialization. shouldn't do this in doInitialize because
 	// it's not necessarily called immediately before runOnLoop....
 	header = L->getHeader();
@@ -131,49 +136,65 @@ bool DSWP::initialize(Loop *L) {
 		cerr << "loop predecessor not unique" << endl;
 		return true;
 	}
+	errs() << "finishing initialize123\n";
 	return false;
 }
 
 
 bool DSWP::runOnLoop(Loop *L, LPPassManager &LPM) {
+	errs() << "runOnLoop123 \n";
 	if (L->getLoopDepth() != 1)	//ONLY care about top level loops
     	return false;
 
 	if (generated.find(L->getHeader()->getParent()) != generated.end())	//this is the generated code
 		return false;
 
-	cout << "///////////////////////////// we are running on a loop" << endl;
-
+	// cout << "///////////////////////////// we are running on a loop" << endl;
+	errs() << "here!!! \n";
 	bool bad = initialize(L);
 	if (bad) {
 		clear();
 		return false;
 	}
-
+	errs() << "here!!!! \n";
 	buildPDG(L);
+	errs() << "here!!!!! \n";
 	showGraph(L);
+	errs() << "here!!!!!! \n";
 	findSCC(L);
+	errs() << "here!!!!!!! \n";
 
 	if (sccNum == 1) {
 		cout << "only one SCC, can't do nuttin" << endl;
 		clear();
 		return false;
 	}
-
+	errs() << "here!!!!!!!! \n";
 	showDAG(L);
+	errs() << "here!!!!!!!!! \n";
 	threadPartition(L);
+	errs() << "here!!!!!!!!!! \n";
 	showPartition(L);
+	errs() << "here!!!!!!!!!!! \n";
 	getLiveinfo(L);
+	errs() << "here!!!!!!!!!!!! \n";
+	errs() << "11 \n";
 	showLiveInfo(L);
+	errs() << "here!!!!!!!!!!!!! \n";
+	errs() << "12 \n";
 	getDominators(L);
+	errs() << "here!!!!!!!!!!!!!! \n";
+	errs() << "13 \n";
 	// TODO: should estimate whether splitting was helpful and if not, return
 	//       the unmodified code (like in the paper)
 	preLoopSplit(L);
+	errs() << "14 \n";
 	loopSplit(L);
+	errs() << "15 \n";
 	insertSynchronization(L);
 	cleanup(L, LPM);
 	clear();
-	cout << "//////////////////////////// we finsih run on a loop " << endl;
+	errs() << "Finish runOnLoop123\n";
 	return true;
 }
 
@@ -199,3 +220,9 @@ bool DSWP::checkEdge(Instruction *u, Instruction *v) {
 	}
 	return false;
 }
+
+
+char DSWP::ID = 0;
+static RegisterPass<DSWP> X("dswp", "DSWP pass",
+    false /* Only looks at CFG */,
+    false /* Analysis Pass */);

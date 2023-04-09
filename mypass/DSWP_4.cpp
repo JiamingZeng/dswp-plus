@@ -1,6 +1,7 @@
 //4th step: code splitting
 
 #include "DSWP.h"
+#include "llvm/IR/IRBuilder.h"
 
 using namespace llvm;
 using namespace std;
@@ -68,7 +69,9 @@ void DSWP::preLoopSplit(Loop *L) {
 
 	// add the actual functions for each thread
 	for (int i = 0; i < MAX_THREAD; i++) {
-		Constant *c = module->getOrInsertFunction(itoa(loopCounter) + "_subloop_" + itoa(i), fType);
+		llvm::FunctionCallee fc = module->getOrInsertFunction(
+				itoa(loopCounter) + "_subloop_" + itoa(i), fType);
+		Constant* c = dyn_cast<Constant>(fc.getCallee());
 		if (c == NULL) {  // NOTE: don't think this is possible...?
 			error("no function!");
 		}
@@ -101,7 +104,7 @@ void DSWP::preLoopSplit(Loop *L) {
 		*context, argTypes, "argstruct_" + itoa(loopCounter) + "_ty");
 
 	// allocate the argument struct
-	AllocaInst *argStruct = new AllocaInst(argStructTy, "argstruct", brInst);
+	AllocaInst *argStruct = new AllocaInst(argStructTy, 0, "argstruct", brInst);
 
 	// store the livein arguments
 	for (unsigned int i = 0; i < livein.size(); i++) {
@@ -110,7 +113,7 @@ void DSWP::preLoopSplit(Loop *L) {
 		gep_args.push_back(ConstantInt::get(int64_ty, 0));
 		gep_args.push_back(ConstantInt::get(int32_ty, i));
 		GetElementPtrInst *ele_addr = GetElementPtrInst::CreateInBounds(
-			argStruct, gep_args, livein[i]->getName() + "_argptr", brInst);
+			argStructTy, argStruct, gep_args, livein[i]->getName() + "_argptr", brInst);
 
 		// actually store it
 		StoreInst *storeVal = new StoreInst(livein[i], ele_addr, brInst);
@@ -156,7 +159,7 @@ void DSWP::preLoopSplit(Loop *L) {
 		gep_args.push_back(ConstantInt::get(int64_ty, 0));
 		gep_args.push_back(ConstantInt::get(int32_ty, livein.size()));
 		GetElementPtrInst *out_addr = GetElementPtrInst::CreateInBounds(
-			argStruct, gep_args, "load_outs", brInst);
+			argStructTy, argStruct, gep_args, "load_outs", brInst);
 
 		map<Value*, Value*> replacement_map;
 
@@ -166,11 +169,12 @@ void DSWP::preLoopSplit(Loop *L) {
 			gep_args.push_back(ConstantInt::get(int64_ty, 0));
 			gep_args.push_back(ConstantInt::get(int32_ty, i));
 			GetElementPtrInst *ele_addr = GetElementPtrInst::CreateInBounds(
-				out_addr, gep_args, liveout[i]->getName() + "_ptr", brInst);
+				outStructTy, out_addr, gep_args, liveout[i]->getName() + "_ptr", brInst);
 
 			// load the out value
+			// need to fix
 			LoadInst *outVal = new LoadInst(
-				ele_addr, liveout[i]->getName() + "_load", brInst);
+				ele_addr->getType(), ele_addr, liveout[i]->getName() + "_load", brInst);
 
 			replacement_map[liveout[i]] = outVal;
 		}
@@ -194,7 +198,8 @@ void DSWP::loopSplit(Loop *L) {
 	//check for each partition, find relevant blocks, set could auto deduplicate
 
 	for (int i = 0; i < MAX_THREAD; i++) {
-		cout << "// Creating function for thread " + itoa(i) << endl;
+		errs() << "Partition " << i << " : ";
+		// cout << "// Creating function for thread " + itoa(i) << endl;
 
 		// create function body for each thread
 		Function *curFunc = allFunc[i];
@@ -205,7 +210,7 @@ void DSWP::loopSplit(Loop *L) {
 		 */
 		set<BasicBlock *> relbb;
 		//relbb.insert(header);
-
+		errs() << "figure out which blocks we use or are dependent on in this thread \n";
 		for (vector<int>::iterator ii = part[i].begin(), ie = part[i].end();
 				ii != ie; ++ii) {
 			int scc = *ii;
@@ -227,6 +232,7 @@ void DSWP::loopSplit(Loop *L) {
 		}
 
 		if (relbb.empty()) {
+			errs() << "WARNING: no related blocks, so doing a nothing function\n";
 			cout << "WARNING: no related blocks, so doing a nothing function" << endl;
 			BasicBlock *newBody =
 				BasicBlock::Create(*context, "do-nothing", curFunc);
@@ -240,6 +246,7 @@ void DSWP::loopSplit(Loop *L) {
 		/*
 		 * Create the new blocks for the new function, including entry and exit
 		 */
+		errs() << "Create the new blocks for the new function, including entry and exit \n";
 		map<BasicBlock *, BasicBlock *> BBMap; // map old blocks to new block
 
 		BasicBlock *newEntry =
@@ -260,6 +267,7 @@ void DSWP::loopSplit(Loop *L) {
 			error("this must be a error early in dependency analysis stage");
 		}
 
+		errs() << "this must be a error early in dependency analysis stage \n";
 		// branch from the entry block to the new header
 		BranchInst *newToHeader = BranchInst::Create(BBMap[header], newEntry);
 
@@ -270,18 +278,19 @@ void DSWP::loopSplit(Loop *L) {
 		/*
 		 * copy over the instructions in each block
 		 */
+		errs() << "copy over the instructions in each block123 \n";
 		typedef SmallVector<Instruction *, 5> to_point_t;
 		to_point_t instructions_to_point;
 		for (set<BasicBlock *>::iterator bi = relbb.begin(), be = relbb.end();
 				bi != be; bi++) {
 			BasicBlock *BB = *bi;
 			BasicBlock *NBB = BBMap[BB];
-
+			errs() << "1 \n";
 			for (BasicBlock::iterator ii = BB->begin(), ie = BB->end();
 					ii != ie; ii++) {
-				Instruction *inst = ii;
-
-				if (assigned[sccId[inst]] != i && !isa<TerminatorInst>(inst)) {
+				Instruction *inst = dyn_cast<Instruction>(ii);
+				errs() << "2 \n";
+				if (assigned[sccId[inst]] != i && !isa<Instruction>(inst)) {
 					// We're not actually inserting this function, but we want
 					// to keep track of where it would have gone. We'll point it
 					// at the next instruction we actually do insert. (Note
@@ -295,11 +304,12 @@ void DSWP::loopSplit(Loop *L) {
 				if (inst->hasName()) {
 					newInst->setName(inst->getName() + "_" + itoa(i));
 				}
-
+				errs() << "3 \n";
 				// re-point branches and such to new blocks
-				if (TerminatorInst *newT = dyn_cast<TerminatorInst>(newInst)) {
+				if (BranchInst *newT = dyn_cast<BranchInst>(newInst)) {
+					errs() << "3.5 \n";
 					unsigned int num_suc = newT->getNumSuccessors();
-
+					errs() << "4 \n";
 					// re-point successor blocks
 					for (unsigned int j = 0; j < num_suc; j++) {
 						BasicBlock *oldBB = newT->getSuccessor(j);
@@ -308,7 +318,7 @@ void DSWP::loopSplit(Loop *L) {
 						if (oldBB != exit && !L->contains(oldBB)) {
 							// branching to a block outside the loop that's
 							// not the exit. this should be impossible...
-							error("crazy branch :(");
+							errs() << "5 \n";
 							continue;
 						}
 
@@ -323,7 +333,7 @@ void DSWP::loopSplit(Loop *L) {
 								break;
 							}
 						}
-
+						errs() << "10 \n";
 						// replace the target
 						newT->setSuccessor(j, newBB);
 					}
@@ -341,7 +351,7 @@ void DSWP::loopSplit(Loop *L) {
 							}
 						}
 						if (target != NULL) {
-							delete newInst;
+							// delete newInst;
 							newInst = BranchInst::Create(target);
 						}
 					}
@@ -391,15 +401,24 @@ void DSWP::loopSplit(Loop *L) {
 				error("didn't point all the instructions we wanted to");
 			}
 		}
-
+		// errs() << "copy over the instructions in each block \n";
 		/*
 		 * Load the arguments, replacing livein variables
 		 */
-		Function::ArgumentListType &arglist = curFunc->getArgumentList();
-		if (arglist.size() != 1) {
+		// Function::ArgumentListType &arglist = curFunc->getArgumentList();
+		// Function::getArgumentList()
+		// vector<Argument*> arglist;
+		// for (Argument* arg_start  = curFunc->arg_begin(); arg_start != curFunc->arg_end(); curFunc++){
+		// 	arglist.push_back(arg_start);
+		// }
+		// iterator_range<llvm::Function::arg_iterator> arglist = curFunc->args();
+		errs() <<"argument size error!";
+		if (curFunc->arg_size() != 1) {
+			errs() <<"argument size error!";
 			error("argument size error!");
 		}
-		Argument *args = arglist.begin(); //the function only have one argmument
+		errs() << "find arg lists \n";
+		Argument *args = curFunc->arg_begin(); //the function only have one argmument
 
 		Function *showPlace = module->getFunction("showPlace");
 		CallInst *inHeader = CallInst::Create(showPlace);
@@ -410,23 +429,25 @@ void DSWP::loopSplit(Loop *L) {
 		castArgs->insertBefore(newToHeader);
 
 		for (unsigned int j = 0, je = livein.size(); j < je; j++) {
-			cout << "Handling argument: " << livein[j]->getName().str() << endl;
+			errs() << "Handling argument: " << livein[j]->getName().str() << "\n";
 
 			// get pointer to the jth argument
 			vector<Value *> gep_args;
 			gep_args.push_back(ConstantInt::get(Type::getInt64Ty(*context), 0));
 			gep_args.push_back(ConstantInt::get(Type::getInt32Ty(*context), j));
+			errs() << "15\n";
 			GetElementPtrInst* ele_addr = GetElementPtrInst::Create(
-				castArgs, gep_args, livein[j]->getName() + "_arg", newToHeader);
+				argStructTy, castArgs, gep_args, livein[j]->getName() + "_arg", newToHeader);
+			errs() << "18\n";
 
 			// load it
-			LoadInst *ele_val = new LoadInst(ele_addr);
-			ele_val->setAlignment(8); // TODO do we want this?
+			LoadInst *ele_val = new LoadInst(ele_addr->getType(), ele_addr, "", newToHeader);
+			ele_val->setAlignment(Align(8)); // TODO: do we want this?
 			ele_val->setName(livein[j]->getName().str() + "_val");
-			ele_val->insertBefore(newToHeader);
+			errs() << "16\n";
+			// ele_val->insertBefore(newToHeader);
 
 			/*
-			// debug: show the value
 			vector<Value *> showArg;
 			showArg.push_back(ele_val);
 			Function *show = module->getFunction("showValue");
@@ -441,6 +462,7 @@ void DSWP::loopSplit(Loop *L) {
 			instMap[i][livein[j]] = ele_val;
 		}
 
+		errs() << "17\n";
 		/*
 		 * Replace the use of instruction def in the function.
 		 * reg dep should be finished in insert syn
@@ -462,7 +484,7 @@ void DSWP::loopSplit(Loop *L) {
 		gep_args.push_back(ConstantInt::get(int64_ty, 0));
 		gep_args.push_back(ConstantInt::get(int32_ty, livein.size()));
 		GetElementPtrInst *out_addr = GetElementPtrInst::CreateInBounds(
-			castArgs, gep_args, "load_outs", newRet);
+			argStructTy, castArgs, gep_args, "load_outs", newRet);
 
 		for (unsigned int j = 0; j < liveout.size(); j++) {
 			if (getInstAssigned(liveout[j]) == i) {
@@ -471,8 +493,7 @@ void DSWP::loopSplit(Loop *L) {
 				gep_args.push_back(ConstantInt::get(int64_ty, 0));
 				gep_args.push_back(ConstantInt::get(int32_ty, j));
 				GetElementPtrInst *ele_addr = GetElementPtrInst::CreateInBounds(
-					out_addr, gep_args, liveout[j]->getName() + "_outptr",
-					newRet);
+					out_addr->getType(), out_addr, gep_args, liveout[j]->getName() + "_outptr", newRet);
 
 				// save it
 				StoreInst *store = new StoreInst(
@@ -486,11 +507,11 @@ void DSWP::getDominators(Loop *L) {
 	// TODO: if we're running DSWP on more than one loop in a single function,
 	//       this will be invalidated the second time through and segfault when
 	//       getNode(BB) returns null for loop-replace.
-	DominatorTree &dom_tree = getAnalysis<DominatorTree>();
-	PostDominatorTree &postdom_tree = getAnalysis<PostDominatorTree>();
+	DominatorTree &dom_tree = getAnalysis<DominatorTreeWrapperPass>().getDomTree();
+	PostDominatorTree &postdom_tree = getAnalysis<PostDominatorTreeWrapperPass>().getPostDomTree();
 
 	for (Function::iterator bi = func->begin(); bi != func->end(); bi++) {
-		BasicBlock *BB = bi;
+		BasicBlock *BB = dyn_cast<BasicBlock>(bi);
 
 		DomTreeNode *idom_node = dom_tree.getNode(BB)->getIDom();
 		idom[BB] = idom_node == NULL ? NULL : idom_node->getBlock();
@@ -522,10 +543,8 @@ void DSWP::getLiveinfo(Loop *L) {
 				defin.push_back(inst);
 			}
 			bool already_liveouted = false;
-			for (Instruction::use_iterator ui = inst->use_begin(),
-										   ue = inst->use_end();
-					ui != ue; ++ui) {
-				User *use = *ui;
+			for (Instruction::use_iterator ui = inst->use_begin(), ue = inst->use_end(); ui != ue; ++ui) {
+				User *use = dyn_cast<User>(*ui);
 				if (Instruction *use_i = dyn_cast<Instruction>(use)) {
 					if (!already_liveouted && !L->contains(use_i)) {
 						liveout.push_back(inst);
