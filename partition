@@ -1,0 +1,57 @@
+latency: 
+0 0
+1 0
+2 1
+3 0
+4 0
+5 0
+6 1
+7 4
+8 1
+9 17
+10 0
+11 0
+12 1
+13 4
+14 1
+15 17
+16 0
+17 0
+18 1
+19 4
+20 1
+21 17
+22 1
+23 18
+partition 0:
+	0 9 
+partition 1:
+	21 
+partition 2:
+	15 
+partition 3:
+	2 8 14 20 22 
+partition 4:
+	10 12 13 
+partition 5:
+	16 18 19 
+partition 6:
+	1 3 4 11 17 23 
+partition 7:
+	6 7 
+partition 8:
+	5 
+partition 9:
+	
+partition 10:
+	
+partition 11:
+	
+partition 12:
+	
+partition 13:
+	
+partition 14:
+	
+partition 15:
+	

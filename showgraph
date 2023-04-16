@@ -1,0 +1,105 @@
+t0   %t0 = load i32, ptr %5, align 4:
+	t0[0]	t3[2]	
+
+t1   %t1 = icmp slt i32 %t0, 1000:
+	t1[0]	
+
+t2   br i1 %t1, label %7, label %15:
+	t3[5]	t4[5]	t5[5]	t6[5]	t12[5]	t13[5]	t14[5]	t15[5]	t21[5]	t22[5]	t23[5]	t24[5]	t30[5]	t31[5]	t32[5]	t33[5]	t34[5]	t0[5]	t1[5]	t2[5]	
+
+t3   %t3 = load i32, ptr %5, align 4:
+	t3[0]	t7[2]	t12[2]	
+
+t4   %t4 = srem i32 %t3, 3:
+	t4[0]	
+
+t5   %t5 = icmp eq i32 %t4, 0:
+	t5[0]	
+
+t6   br i1 %t5, label %8, label %9:
+	t7[5]	t8[5]	t9[5]	t10[5]	t11[5]	
+
+t7   %t7 = load i32, ptr %5, align 4:
+	t7[0]	t12[2]	
+
+t8   %t8 = load i32, ptr %2, align 4:
+	t8[0]	t10[2]	
+
+t9   %t9 = add nsw i32 %t8, %t7:
+	t9[0]	
+
+t10   store i32 %t9, ptr %2, align 4:
+	t8[2]	
+
+t11   br label %9:
+	
+
+t12   %t12 = load i32, ptr %5, align 4:
+	t12[0]	t16[2]	t21[2]	
+
+t13   %t13 = srem i32 %t12, 5:
+	t13[0]	
+
+t14   %t14 = icmp eq i32 %t13, 0:
+	t14[0]	
+
+t15   br i1 %t14, label %10, label %11:
+	t16[5]	t17[5]	t18[5]	t19[5]	t20[5]	
+
+t16   %t16 = load i32, ptr %5, align 4:
+	t16[0]	t21[2]	
+
+t17   %t17 = load i32, ptr %3, align 4:
+	t17[0]	t19[2]	
+
+t18   %t18 = add nsw i32 %t17, %t16:
+	t18[0]	
+
+t19   store i32 %t18, ptr %3, align 4:
+	t17[2]	
+
+t20   br label %11:
+	
+
+t21   %t21 = load i32, ptr %5, align 4:
+	t21[0]	t25[2]	t31[2]	
+
+t22   %t22 = srem i32 %t21, 15:
+	t22[0]	
+
+t23   %t23 = icmp eq i32 %t22, 0:
+	t23[0]	
+
+t24   br i1 %t23, label %12, label %13:
+	t25[5]	t26[5]	t27[5]	t28[5]	t29[5]	
+
+t25   %t25 = load i32, ptr %5, align 4:
+	t25[0]	t31[2]	
+
+t26   %t26 = load i32, ptr %4, align 4:
+	t26[0]	t28[2]	
+
+t27   %t27 = add nsw i32 %t26, %t25:
+	t27[0]	
+
+t28   store i32 %t27, ptr %4, align 4:
+	t26[2]	
+
+t29   br label %13:
+	
+
+t30   br label %14:
+	
+
+t31   %t31 = load i32, ptr %5, align 4:
+	t31[0]	t33[2]	
+
+t32   %t32 = add nsw i32 %t31, 1:
+	t32[0]	
+
+t33   store i32 %t32, ptr %5, align 4:
+	t0[2]	
+
+t34   br label %6, !llvm.loop !6:
+	
+

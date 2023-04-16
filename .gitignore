@@ -9,6 +9,6 @@
 *.bc.ll.pdf
 *.out
 
-dag
-partition
-showgraph
+# dag
+# partition
+# showgraph

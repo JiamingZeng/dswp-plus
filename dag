@@ -1,0 +1,49 @@
+num:24
+SCC 0:t2 
+	dependent scc:1 2 3 4 6 7 8 9 10 12 13 14 15 16 18 19 20 21 22 23 
+SCC 1:t34 
+	dependent scc:
+SCC 2:t32 
+	dependent scc:
+SCC 3:t30 
+	dependent scc:
+SCC 4:t24 
+	dependent scc:5 6 7 23 
+SCC 5:t29 
+	dependent scc:
+SCC 6:t27 
+	dependent scc:
+SCC 7:t28 t26 
+	dependent scc:
+SCC 8:t23 
+	dependent scc:
+SCC 9:t22 
+	dependent scc:
+SCC 10:t15 
+	dependent scc:11 12 13 23 
+SCC 11:t20 
+	dependent scc:
+SCC 12:t18 
+	dependent scc:
+SCC 13:t19 t17 
+	dependent scc:
+SCC 14:t14 
+	dependent scc:
+SCC 15:t13 
+	dependent scc:
+SCC 16:t6 
+	dependent scc:17 18 19 23 
+SCC 17:t11 
+	dependent scc:
+SCC 18:t9 
+	dependent scc:
+SCC 19:t10 t8 
+	dependent scc:
+SCC 20:t5 
+	dependent scc:
+SCC 21:t4 
+	dependent scc:
+SCC 22:t1 
+	dependent scc:
+SCC 23:t3 t7 t12 t16 t21 t25 t31 t33 t0 
+	dependent scc:
